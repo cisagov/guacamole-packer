@@ -1,4 +1,4 @@
-# guacamole-packer 💀📦 #
+# guacamole-packer 🥑📦 #
 
 [![Build Status](https://travis-ci.com/cisagov/guacamole-packer.svg?branch=develop)](https://travis-ci.com/cisagov/guacamole-packer)
 
