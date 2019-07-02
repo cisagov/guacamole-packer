@@ -2,13 +2,9 @@
 
 [![Build Status](https://travis-ci.com/cisagov/guacamole-packer.svg?branch=develop)](https://travis-ci.com/cisagov/guacamole-packer)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) GitHub
-[packer](https://packer.io) project started.  This skeleton project
-contains [licensing information](LICENSE), as well as [pre-commit
-hooks](https://pre-commit.com) and a [Travis
-CI](https://travis-ci.com) configuration appropriate for the major
-languages that we use.
+This project can be used to create machine images that include
+[Apache Guacamole](https://guacamole.apache.org/), a clientless
+remote desktop gateway.
 
 ## Pre-requisites ##
 
