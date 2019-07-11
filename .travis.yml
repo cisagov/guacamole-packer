@@ -31,6 +31,7 @@ env:
     wjflHy79kUiKY/1klPybZNOXlY1cyJ1CHysqCP8sqllt08yHvcIkfHarE/ksIXk0lM\
     90vBOYL5LCE2mw0+u4lGR9WZG2WM41/zEfWVbEBi9R58fkR+yGa3gJFL9MI/Z25HG/\
     vLcgp+HW8oWU6ut7dO+aHh0CxLZfMwWgkU="
+    - CURL_CACHE_DIR="$HOME/.cache/curl"
     # GITHUB_ACCESS_TOKEN
     - secure: "T07BS85f3AuDXwPya5IUy7UViUDHSXh7T8G7iwgTcQ6GZ009Tooy4AV\
     pv/CqiY5w1E/O+gqLy1OHsgwUmrs+z4OItSfBQZy519K6BrOEul34wJKmF/bkuERF9\
