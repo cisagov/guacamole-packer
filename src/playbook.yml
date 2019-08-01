@@ -21,8 +21,17 @@
     - nvme
 
 - hosts: all
-  name: Install Guacamole
+  name: Install Guacamole Docker composition
   become: yes
   become_method: sudo
   roles:
     - guacamole
+
+- hosts: all
+  name: Start up Guacamole Docker composition
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Start up Guacamole Docker composition
+      docker_compose:
+        project_src: /var/guacamole
