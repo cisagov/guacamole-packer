@@ -7,8 +7,9 @@ module "iam_user" {
   source = "github.com/cisagov/molecule-packer-travisci-iam-user-tf-module"
 
   add_packer_permissions = true
-  ssm_parameters         = ["/cyhy/dev/users", "/ssh/public_keys/*"]
-  user_name              = "test-guacamole-packer"
+  ssm_parameters = ["/cyhy/dev/users", "/ssh/public_keys/*",
+  "/guacamole/postgres_username", "/guacamole/postgres_password"]
+  user_name = "test-guacamole-packer"
   tags = {
     Team        = "CISA - Development"
     Application = "guacamole-packer"
