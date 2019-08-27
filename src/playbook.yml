@@ -27,15 +27,6 @@
   roles:
     - guacamole
 
-- hosts: all
-  name: Start up Guacamole Docker composition
-  become: yes
-  become_method: sudo
-  tasks:
-    - name: Start up Guacamole Docker composition
-      docker_compose:
-        project_src: /var/guacamole
-
 # boto3 is needed during deployment to fetch SSL certificates
 - hosts: all
   name: Install boto3
