@@ -16,12 +16,12 @@ provider "aws" {
 data "aws_caller_identity" "images" {
 }
 
-# The most-recent AMI created by cisagov/skeleton-packer-cool
-data "aws_ami" "example" {
+# The most-recent AMI created by cisagov/guacamole-packer
+data "aws_ami" "guacamole" {
   filter {
     name = "name"
     values = [
-      "example-hvm-*-x86_64-ebs",
+      "guacamole-hvm-*-x86_64-ebs",
     ]
   }
 
@@ -49,5 +49,5 @@ module "ami_launch_permission" {
   }
 
   account_name_regex = "^env"
-  ami_id             = data.aws_ami.example.id
+  ami_id             = data.aws_ami.guacamole.id
 }

@@ -35,10 +35,11 @@ module "iam_user" {
 
   add_packer_permissions = true
   images_account_id      = data.aws_caller_identity.images.account_id
-  ssm_parameters         = ["/cyhy/dev/users", "/ssh/public_keys/*"]
-  user_name              = "test-skeleton-packer-cool"
+  ssm_parameters = ["/cyhy/dev/users", "/ssh/public_keys/*",
+  "/guacamole/postgres_username", "/guacamole/postgres_password"]
+  user_name = "test-guacamole-packer"
   tags = {
     Team        = "CISA - Development"
-    Application = "skeleton-packer-cool"
+    Application = "guacamole-packer"
   }
 }
