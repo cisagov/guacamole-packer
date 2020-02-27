@@ -1,6 +1,6 @@
 # guacamole-packer 🥑📦 #
 
-[![Build Status](https://travis-ci.com/cisagov/guacamole-packer.svg?branch=develop)](https://travis-ci.com/cisagov/guacamole-packer)
+[![GitHub Build Status](https://github.com/cisagov/guacamole-packer/workflows/build/badge.svg)](https://github.com/cisagov/guacamole-packer/actions)
 
 This project can be used to create machine images that include
 [Apache Guacamole](https://guacamole.apache.org/), a clientless
@@ -11,97 +11,148 @@ remote desktop gateway.
 This project requires a build user to exist in AWS.  The accompanying terraform
 code will create the user with the appropriate name and permissions.  This only
 needs to be run once per project, per AWS account.  This user will also be used by
-Travis-CI.
+GitHub Actions.
+
+Before the build user can be created, the following profiles must exist in
+your AWS credentials file:
+
+* `cool-images-provisionec2amicreateroles`
+* `cool-images-provisionparameterstorereadroles`
+* `cool-terraform-backend`
+* `cool-users-provisionaccount`
+
+The easiest way to set up those profiles is to use our
+[`aws-profile-sync`](https://github.com/cisagov/aws-profile-sync) utility.
+Follow the usage instructions in that repository before continuing with the
+next steps.  Note that you will need to know where your team stores their
+remote profile data in order to use
+[`aws-profile-sync`](https://github.com/cisagov/aws-profile-sync).
+
+To create the build user, follow these instructions:
 
 ```console
-cd terraform
+cd terraform-test-user
 terraform init --upgrade=true
 terraform apply
 ```
 
-Once the user is created you will need to update the `.travis.yml` file with the
-new encrypted environment variables.
+Once the user is created you will need to update the
+[repository's secrets](https://github.com/cisagov/guacamole-packer/settings/secrets)
+with the new encrypted environment variables.
 
 ```console
 terraform state show module.iam_user.aws_iam_access_key.key
 ```
 
-Take the `id` and `secret` fields from the above command's output and [encrypt
-and place in the `.travis.yml` file](https://docs.travis-ci.com/user/encryption-keys/).
+Take the `id` and `secret` fields from the above command's output and create the
+`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables in the
+[repository's secrets](https://github.com/cisagov/guacamole-packer/settings/secrets).
 
-Here is an example of encrypting the credentials for Travis:
+You will also need to add one additional repository secret called
+`BUILD_ROLE_TO_ASSUME`.  Here is how to see the ARN that you need to set
+as the value for that secret:
 
 ```console
- travis encrypt --com --no-interactive "AWS_ACCESS_KEY_ID=AKIAxxxxxxxxxxxxxxxx"
- travis encrypt --com --no-interactive "AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
- travis encrypt --com --no-interactive "GITHUB_ACCESS_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+terraform state show module.iam_user.aws_iam_role.ec2amicreate_role[0] | grep ":role/"
 ```
 
 This project also requires the following data to exist in your [AWS Systems
 Manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html):
 
-- `/cyhy/dev/users`: A comma-separated list of usernames of users that should
+* `/cyhy/dev/users`: A comma-separated list of usernames of users that should
   be allowed to SSH to the instance based on this image
-- `/ssh/public_keys/<username>`: The public SSH key of each user in the
+* `/ssh/public_keys/<username>`: The public SSH key of each user in the
   `/cyhy/dev/users` list
-- `/guacamole/postgres_username`: The non-admin postgres username used by
+* `/guacamole/postgres_username`: The non-admin postgres username used by
   Guacamole
-- `/guacamole/postgres_password`: The non-admin postgres password used by
+* `/guacamole/postgres_password`: The non-admin postgres password used by
   Guacamole
+
+IMPORTANT: The account where your images will be built must have a VPC and
+a public subnet both tagged with the name "AMI Build", otherwise `packer`
+will not be able to build images.
 
 ## Building the Image ##
 
-### Using Travis-CI ###
+### Using GitHub Actions ###
 
 1. Create a [new release](https://help.github.com/en/articles/creating-releases)
    in GitHub.
 1. There is no step 2!
 
-Travis-CI can build this project in three different modes depending on
+GitHub Actions can build this project in three different modes depending on
 how the build was triggered from GitHub.
 
-1. **Non-release test**: After a normal commit or pull request Travis
+1. **Non-release test**: After a normal commit or pull request GitHub Actions
    will build the project, and run tests and validation on the
    packer configuration.  It will __not__ build an image.
 1. **Pre-release deploy**: Publish a GitHub release
    with the "This is a pre-release" checkbox checked.  An image will be built
-   and deployed to the single region defined by the `PACKER_BUILD_REGION`
-   environment variable.
+   and deployed using the [`prerelease`](.github/workflows/prerelease.yml)
+   workflow.  This should be configured to deploy the image to a single region
+   using a non-production account.
 1. **Production release deploy**: Publish a GitHub release with
    the "This is a pre-release" checkbox unchecked.  An image will be built
-   in the `PACKER_BUILD_REGION` and copied to each region listed in the
-   `PACKER_DEPLOY_REGION_KMS_MAP` environment variable.
+   and deployed using the [`release`](.github/workflows/release.yml)
+   workflow.  This should be configured to deploy the image to multiple regions
+   using a production account.
 
 ### Using Your Local Environment ###
 
-The following environment variables are used by Packer:
+Packer will use your
+[standard AWS environment](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
+to build the image, however you will need to set up one profile for the
+previously-created build user and another profile to assume the associated
+`EC2AMICreate` role.  You will need the `aws_access_key_id` and
+`aws_secret_access_key` that you set as GitHub secrets earlier.
 
-- Required
-  - `PACKER_BUILD_REGION`: the region in which to build the image.
-  - `PACKER_DEPLOY_REGION_KMS_MAP`: a map of deploy regions to KMS keys.
-- Optional
-  - `GITHUB_ACCESS_TOKEN`: a personal GitHub token to use for API access.
-  - `PACKER_IMAGE_VERSION`: the version tag applied to the final image.
+Add the following blocks to your AWS credentials file (be sure to replace the
+dummy account ID in the `role_arn` with your own):
+
+```console
+[test-guacamole-packer]
+aws_access_key_id = AKIAXXXXXXXXXXXXXXXX
+aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+[cool-images-ec2amicreate-guacamole-packer]
+role_arn = arn:aws:iam::111111111111:role/EC2AMICreate-test-guacamole-packer
+source_profile = test-guacamole-packer
+role_session_name = example
+```
+
+The [Packer template](src/packer.json) requires two environment variables to be defined:
+
+* `BUILD_REGION`: The region in which to build the image.
+* `BUILD_REGION_KMS`: The KMS key alias to use to encrypt the image.
+
+Additionally, the following optional environment variables can be used
+by the [Packer template](src/packer.json) to tag the final image:
+
+* `GITHUB_IS_PRERELEASE`: Boolean pre-release status.
+* `GITHUB_RELEASE_TAG`: Image version.
+* `GITHUB_RELEASE_URL`: URL pointing to the related GitHub release.
 
 Here is an example of how to kick off a pre-release build:
 
 ```console
 pip install --requirement requirements-dev.txt
-export PACKER_BUILD_REGION="us-east-2"
-export PACKER_DEPLOY_REGION_KMS_MAP="us-east-1:alias/cool/ebs,us-east-2:alias/cool/ebs,us-west-1:alias/cool/ebs,us-west-2:alias/cool/ebs"
-export PACKER_IMAGE_VERSION=$(./bump_version.sh show)
 ansible-galaxy install --force --force-with-deps --role-file src/requirements.yml
-./patch_packer_config.py pre-release src/packer.json
-packer build --timestamp-ui src/packer.json
+export BUILD_REGION="us-east-1"
+export BUILD_REGION_KMS="alias/cool-amis"
+export GITHUB_RELEASE_TAG=$(./bump_version.sh show)
+AWS_PROFILE=cool-images-ec2amicreate-guacamole-packer packer build --timestamp-ui src/packer.json
 ```
 
 If you are satisfied with your pre-release image, you can easily create a release
-that deploys to all regions by changing the `pre-release` command of
-`patch_packer_config.py` to `release` and rerunning packer:
+that deploys to all regions by adding additional regions to the packer configuration.
+This can be done with the `patch_packer_config.py` helper script.
+Echo in a comma-separated regions:kms_keys list to `patch_packer_config.py`
+and rerunning packer:
 
 ```console
-./patch_packer_config.py release src/packer.json
-packer build --timestamp-ui src/packer.json
+echo "us-east-2:alias/cool-amis,us-west-1:alias/cool-amis,\
+us-west-2:alias/cool-amis" | ./patch_packer_config.py src/packer.json
+AWS_PROFILE=cool-images-ec2amicreate-guacamole-packer packer build --timestamp-ui src/packer.json
 ```
 
 See the patcher script's help for more information about its options and
@@ -109,6 +160,19 @@ inner workings:
 
 ```console
 ./patch_packer_config.py --help
+```
+
+### Giving Other AWS Accounts Permission to Launch the Image ###
+
+After the AMI has been successfully created, you may want to allow other
+accounts in your AWS organization permission to launch it.  For this project,
+we want to allow all accounts whose names begin with "env" to launch the
+most-recently-created AMI.  To do that, follow these instructions:
+
+```console
+cd terraform-post-packer
+terraform init --upgrade=true
+terraform apply
 ```
 
 ## Contributing ##
