@@ -11,7 +11,7 @@ module "iam_user" {
 
   ssm_parameters = ["/cyhy/dev/users", "/ssh/public_keys/*",
   "/guacamole/postgres_username", "/guacamole/postgres_password"]
-  user_name = "test-guacamole-packer"
+  user_name = "build-guacamole-packer"
   tags = {
     Team        = "CISA - Development"
     Application = "guacamole-packer"
