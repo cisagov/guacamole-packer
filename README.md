@@ -8,10 +8,24 @@ remote desktop gateway.
 
 ## Pre-requisites ##
 
-This project requires a build user to exist in AWS.  The accompanying terraform
-code will create the user with the appropriate name and permissions.  This only
-needs to be run once per project, per AWS account.  This user will also be used by
-GitHub Actions.
+This project requires a build user to exist in AWS. The accompanying Terraform
+code will create the user with the appropriate name and permissions. This only
+needs to be run once per project, per AWS account. This user will also be used
+by GitHub Actions.
+
+Before the build user can be created, the following profile must exist in
+your AWS credentials file:
+
+* `cool-terraform-backend`
+
+The easiest way to set up that profile is to use our
+[`aws-profile-sync`](https://github.com/cisagov/aws-profile-sync) utility.
+Follow the usage instructions in that repository before continuing with the
+next steps. Note that you will need to know where your team stores their
+remote profile data in order to use
+[`aws-profile-sync`](https://github.com/cisagov/aws-profile-sync).
+
+To create the build user, follow these instructions:
 
 Before the build user can be created, the following profile must exist in
 your AWS credentials file:
@@ -28,7 +42,7 @@ remote profile data in order to use
 To create the build user, follow these instructions:
 
 ```console
-cd terraform-test-user
+cd terraform-build-user
 terraform init --upgrade=true
 terraform apply
 ```
@@ -77,16 +91,16 @@ how the build was triggered from GitHub.
 
 1. **Non-release test**: After a normal commit or pull request GitHub Actions
    will build the project, and run tests and validation on the
-   packer configuration.  It will __not__ build an image.
+   packer configuration. It will __not__ build an image.
 1. **Pre-release deploy**: Publish a GitHub release
-   with the "This is a pre-release" checkbox checked.  An image will be built
+   with the "This is a pre-release" checkbox checked. An image will be built
    and deployed using the [`prerelease`](.github/workflows/prerelease.yml)
-   workflow.  This should be configured to deploy the image to a single region
+   workflow. This should be configured to deploy the image to a single region
    using a non-production account (e.g. "staging").
 1. **Production release deploy**: Publish a GitHub release with
-   the "This is a pre-release" checkbox unchecked.  An image will be built
+   the "This is a pre-release" checkbox unchecked. An image will be built
    and deployed using the [`release`](.github/workflows/release.yml)
-   workflow.  This should be configured to deploy the image to multiple regions
+   workflow. This should be configured to deploy the image to multiple regions
    using a production account.
 
 ### Using Your Local Environment ###
@@ -95,20 +109,20 @@ Packer will use your
 [standard AWS environment](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
 to build the image, however you will need to set up one profile for the
 previously-created build user and another profile to assume the associated
-`EC2AMICreate` role.  You will need the `aws_access_key_id` and
+`EC2AMICreate` role. You will need the `aws_access_key_id` and
 `aws_secret_access_key` that you set as GitHub secrets earlier.
 
 Add the following blocks to your AWS credentials file (be sure to replace the
 dummy account ID in the `role_arn` with your own):
 
 ```console
-[test-guacamole-packer]
+[build-guacamole-packer]
 aws_access_key_id = AKIAXXXXXXXXXXXXXXXX
 aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 [cool-images-ec2amicreate-guacamole-packer]
-role_arn = arn:aws:iam::111111111111:role/EC2AMICreate-test-guacamole-packer
-source_profile = test-guacamole-packer
+role_arn = arn:aws:iam::111111111111:role/EC2AMICreate-build-guacamole-packer
+source_profile = build-guacamole-packer
 role_session_name = example
 ```
 
@@ -157,9 +171,9 @@ inner workings:
 ### Giving Other AWS Accounts Permission to Launch the Image ###
 
 After the AMI has been successfully created, you may want to allow other
-accounts in your AWS organization permission to launch it.  For this project,
+accounts in your AWS organization permission to launch it. For this project,
 we want to allow all accounts whose names begin with "env" to launch the
-most-recently-created AMI.  To do that, follow these instructions, noting that
+most-recently-created AMI. To do that, follow these instructions, noting that
 "ENVIRONMENT_TYPE" below should be replaced with where the AMI was created
 (e.g "production", "staging", etc.):
 
