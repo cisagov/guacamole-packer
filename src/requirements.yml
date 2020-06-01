@@ -8,6 +8,8 @@
   name: cloudwatch_agent
 - src: https://github.com/cisagov/ansible-role-dev-ssh-access
   name: dev_ssh_access
+- src: https://github.com/cisagov/ansible-role-freeipa-client
+  name: freeipa_client
 - src: https://github.com/cisagov/ansible-role-guacamole
   name: guacamole
 - src: https://github.com/cisagov/ansible-role-htop
