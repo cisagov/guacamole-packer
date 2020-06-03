@@ -7,5 +7,6 @@
     - banner
     - clamav
     - dev_ssh_access
+    - freeipa_client
     - htop
     - persist_journald
