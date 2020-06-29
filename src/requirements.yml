@@ -16,7 +16,7 @@
   name: guacamole
 - src: https://github.com/cisagov/ansible-role-htop
   name: htop
-- src: https://github.com/cisagov/ansible-role-joiner
+- src: https://github.com/cisagov/ansible-role-joiner-user
   name: joiner
 - src: https://github.com/cisagov/ansible-role-nvme
   name: nvme
