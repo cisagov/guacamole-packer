@@ -6,7 +6,9 @@
   roles:
     - banner
     - clamav
+    - devops
     - dev_ssh_access
     - freeipa_client
     - htop
+    - joiner
     - persist_journald
