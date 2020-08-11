@@ -30,3 +30,4 @@
   name: remove_python2
 - src: https://github.com/cisagov/ansible-role-upgrade
   name: upgrade
+  version: bugfix/configure-grub-to-use-correct-kernel
