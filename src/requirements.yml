@@ -17,7 +17,6 @@
   name: freeipa_client
 - src: https://github.com/cisagov/ansible-role-guacamole
   name: guacamole
-  version: improvement/preload-docker-images
 - src: https://github.com/cisagov/ansible-role-htop
   name: htop
 - src: https://github.com/cisagov/ansible-role-joiner-user
