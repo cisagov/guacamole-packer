@@ -11,28 +11,13 @@
           {{ lookup('aws_ssm', '/guacamole/postgres_username') }}
         postgres_password: >
           {{ lookup('aws_ssm', '/guacamole/postgres_password') }}
-
-# boto3 is needed during deployment to fetch SSL certificates
-- hosts: all
-  name: Install boto3
-  become: yes
-  become_method: sudo
+  # boto3 is needed during deployment to fetch SSL certificates.
+  # pystache may be used during deployment as part of the process that
+  # automatically defines Guacamole connections to other instances
   tasks:
-    - name: Install boto3
-      pip:
+    - name: Install boto3 and pystache
+      ansible.builtin.pip:
         executable: pip3
         name:
           - boto3
-
-# pystache may be used during deployment as part of the process that
-# automatically defines Guacamole connections to other instances
-- hosts: all
-  name: Install pystache
-  become: yes
-  become_method: sudo
-  tasks:
-    - name: Install pystache
-      pip:
-        executable: pip3
-        name:
           - pystache
