@@ -1,9 +1,9 @@
 ---
 - name: Import base image playbook
-  import_playbook: base.yml
+  ansible.builtin.import_playbook: base.yml
 
 - name: Import guacamole playbook
-  import_playbook: guacamole.yml
+  ansible.builtin.import_playbook: guacamole.yml
 
 - name: Import AWS playbook
-  import_playbook: aws.yml
+  ansible.builtin.import_playbook: aws.yml
