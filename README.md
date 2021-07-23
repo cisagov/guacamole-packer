@@ -16,7 +16,7 @@ by GitHub Actions.
 Before the build user can be created, the following profile must exist in
 your AWS credentials file:
 
-* `cool-terraform-backend`
+- `cool-terraform-backend`
 
 The easiest way to set up that profile is to use our
 [`aws-profile-sync`](https://github.com/cisagov/aws-profile-sync) utility.
@@ -30,7 +30,7 @@ To create the build user, follow these instructions:
 Before the build user can be created, the following profile must exist in
 your AWS credentials file:
 
-* `cool-terraform-backend`
+- `cool-terraform-backend`
 
 The easiest way to set up that profile is to use our
 [`aws-profile-sync`](https://github.com/cisagov/aws-profile-sync) utility.
@@ -65,13 +65,13 @@ in the repository's settings.
 This project also requires the following data to exist in your [AWS Systems
 Manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html):
 
-* `/cyhy/dev/users`: A comma-separated list of usernames of users that should
+- `/cyhy/dev/users`: A comma-separated list of usernames of users that should
   be allowed to SSH to the instance based on this image
-* `/ssh/public_keys/<username>`: The public SSH key of each user in the
+- `/ssh/public_keys/<username>`: The public SSH key of each user in the
   `/cyhy/dev/users` list
-* `/guacamole/postgres_username`: The non-admin postgres username used by
+- `/guacamole/postgres_username`: The non-admin postgres username used by
   Guacamole
-* `/guacamole/postgres_password`: The non-admin postgres password used by
+- `/guacamole/postgres_password`: The non-admin postgres password used by
   Guacamole
 
 IMPORTANT: The account where your images will be built must have a VPC and
@@ -128,15 +128,15 @@ role_session_name = example
 
 The [Packer template](src/packer.json) requires two environment variables to be defined:
 
-* `BUILD_REGION`: The region in which to build the image.
-* `BUILD_REGION_KMS`: The KMS key alias to use to encrypt the image.
+- `BUILD_REGION`: The region in which to build the image.
+- `BUILD_REGION_KMS`: The KMS key alias to use to encrypt the image.
 
 Additionally, the following optional environment variables can be used
 by the [Packer template](src/packer.json) to tag the final image:
 
-* `GITHUB_IS_PRERELEASE`: Boolean pre-release status.
-* `GITHUB_RELEASE_TAG`: Image version.
-* `GITHUB_RELEASE_URL`: URL pointing to the related GitHub release.
+- `GITHUB_IS_PRERELEASE`: Boolean pre-release status.
+- `GITHUB_RELEASE_TAG`: Image version.
+- `GITHUB_RELEASE_URL`: URL pointing to the related GitHub release.
 
 Here is an example of how to kick off a pre-release build:
 
