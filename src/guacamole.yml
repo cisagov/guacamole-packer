@@ -6,20 +6,24 @@
   roles:
     - role: guacamole
       vars:
+        # The ">-" combination is critical here.  Without the minus
+        # character these values would have a line return appended
+        # onto the end of them.
+        #
         # The postgres database username and password for guacamole
-        postgres_username: >
+        postgres_username: >-
           {{ lookup('aws_ssm', '/guacamole/postgres_username') }}
-        postgres_password: >
+        postgres_password: >-
           {{ lookup('aws_ssm', '/guacamole/postgres_password') }}
-        private_ssh_key: >
+        private_ssh_key: >-
           {{ lookup('aws_ssm', '/vnc/ssh/rsa_private_key') }}
-        rdp_username: >
+        rdp_username: >-
           {{ lookup('aws_ssm', '/rdp/username') }}
-        rdp_password: >
+        rdp_password: >-
           {{ lookup('aws_ssm', '/rdp/password') }}
-        vnc_username: >
+        vnc_username: >-
           {{ lookup('aws_ssm', '/vnc/username') }}
-        vnc_password: >
+        vnc_password: >-
           {{ lookup('aws_ssm', '/vnc/password') }}
   # boto3 is needed during deployment to fetch SSL certificates.
   # pystache may be used during deployment as part of the process that
