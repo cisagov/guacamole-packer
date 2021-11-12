@@ -9,7 +9,16 @@ module "iam_user" {
     aws.images-staging-ssm    = aws.images-staging-ssm
   }
 
-  ssm_parameters = ["/cyhy/dev/users", "/ssh/public_keys/*",
-  "/guacamole/postgres_username", "/guacamole/postgres_password"]
+  ssm_parameters = [
+    "/cyhy/dev/users",
+    "/ssh/public_keys/*",
+    "/guacamole/postgres_username",
+    "/guacamole/postgres_password",
+    "/rdp/username",
+    "/rdp/password",
+    "/vnc/ssh/rsa_private_key",
+    "/vnc/username",
+    "/vnc/password",
+  ]
   user_name = "build-guacamole-packer"
 }
