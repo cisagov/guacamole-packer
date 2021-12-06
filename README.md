@@ -73,6 +73,18 @@ Manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/user
   Guacamole
 - `/guacamole/postgres_password`: The non-admin postgres password used by
   Guacamole
+- `/rdp/username`: The username for Guacamole to use when connecting to an
+  instance via RDP
+- `/rdp/password`: The password for Guacamole to use when connecting to an
+  instance via RDP
+- `/vnc/ssh/rsa_private_key`: The private SSH key to use for SFTP file transfer
+  in Guacamole
+- `/vnc/username`: The username for Guacamole to use when connecting to an
+  instance via VNC
+- `/vnc/password`: The password for Guacamole to use when connecting to an
+  instance via VNC
+- `/vnc/sftp/windows_base_directory`: The base path for the SFTP directories
+  that Guacamole will use when connecting to a Windows instance via VNC
 
 IMPORTANT: The account where your images will be built must have a VPC and
 a public subnet both tagged with the name "AMI Build", otherwise `packer`
