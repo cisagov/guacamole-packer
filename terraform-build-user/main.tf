@@ -19,6 +19,7 @@ module "iam_user" {
     "/vnc/ssh/rsa_private_key",
     "/vnc/username",
     "/vnc/password",
+    "/vnc/sftp/windows_base_directory",
   ]
   user_name = "build-guacamole-packer"
 }
