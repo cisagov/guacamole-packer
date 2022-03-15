@@ -94,7 +94,7 @@ source "amazon-ebs" "guacamole" {
     Application        = "Guacamole"
     Base_AMI_Name      = data.amazon-ami.debian_bullseye.name
     GitHub_Release_URL = var.release_url
-    OS_Version         = "Debian Buster"
+    OS_Version         = "Debian Bullseye"
     Pre_Release        = var.is_prerelease
     Release            = var.release_tag
     Team               = "VM Fusion - Development"
