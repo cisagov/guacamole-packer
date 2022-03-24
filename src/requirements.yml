@@ -11,7 +11,6 @@
   name: clamav
 - src: https://github.com/cisagov/ansible-role-cloudwatch-agent
   name: cloudwatch_agent
-  version: improvement/cwagent-config-file
 - src: https://github.com/cisagov/ansible-role-dev-ssh-access
   name: dev_ssh_access
 - src: https://github.com/cisagov/ansible-role-devops-user
