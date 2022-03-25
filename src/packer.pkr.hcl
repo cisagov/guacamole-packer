@@ -46,9 +46,9 @@ variable "skip_create_ami" {
   type        = bool
 }
 
-data "amazon-ami" "debian_buster" {
+data "amazon-ami" "debian_bullseye" {
   filters = {
-    name                = "debian-10-amd64-*"
+    name                = "debian-11-amd64-*"
     root-device-type    = "ebs"
     virtualization-type = "hvm"
   }
@@ -83,7 +83,7 @@ source "amazon-ebs" "guacamole" {
   region             = var.build_region
   region_kms_key_ids = var.region_kms_keys
   skip_create_ami    = var.skip_create_ami
-  source_ami         = data.amazon-ami.debian_buster.id
+  source_ami         = data.amazon-ami.debian_bullseye.id
   ssh_username       = "admin"
   subnet_filter {
     filters = {
@@ -92,9 +92,9 @@ source "amazon-ebs" "guacamole" {
   }
   tags = {
     Application        = "Guacamole"
-    Base_AMI_Name      = data.amazon-ami.debian_buster.name
+    Base_AMI_Name      = data.amazon-ami.debian_bullseye.name
     GitHub_Release_URL = var.release_url
-    OS_Version         = "Debian Buster"
+    OS_Version         = "Debian Bullseye"
     Pre_Release        = var.is_prerelease
     Release            = var.release_tag
     Team               = "VM Fusion - Development"
