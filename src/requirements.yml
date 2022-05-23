@@ -17,7 +17,6 @@
   name: devops
 - src: https://github.com/cisagov/ansible-role-freeipa-client
   name: freeipa_client
-  version: bugfix/only-use-backports-where-absolutely-necessary
 - src: https://github.com/cisagov/ansible-role-guacamole
   name: guacamole
 - src: https://github.com/cisagov/ansible-role-htop
