@@ -4,10 +4,10 @@
   become: yes
   become_method: sudo
   roles:
+    - automated_security_updates
     - banner
     - clamav
     - devops
-    - dev_ssh_access
     - freeipa_client
     - htop
     - joiner
