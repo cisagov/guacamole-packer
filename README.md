@@ -65,10 +65,6 @@ in the repository's settings.
 This project also requires the following data to exist in your [AWS Systems
 Manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html):
 
-- `/cyhy/dev/users`: A comma-separated list of usernames of users that should
-  be allowed to SSH to the instance based on this image
-- `/ssh/public_keys/<username>`: The public SSH key of each user in the
-  `/cyhy/dev/users` list
 - `/guacamole/postgres_username`: The non-admin postgres username used by
   Guacamole
 - `/guacamole/postgres_password`: The non-admin postgres password used by
