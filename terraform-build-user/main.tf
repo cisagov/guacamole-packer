@@ -14,7 +14,7 @@ module "iam_user" {
     "/guacamole/postgres_password",
     "/rdp/username",
     "/rdp/password",
-    "/vnc/ssh/rsa_private_key",
+    "/vnc/ssh/ed25519_private_key",
     "/vnc/username",
     "/vnc/password",
     "/vnc/sftp/windows_base_directory",

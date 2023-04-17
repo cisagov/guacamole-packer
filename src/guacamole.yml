@@ -16,7 +16,7 @@
         postgres_password: >-
           {{ lookup('aws_ssm', '/guacamole/postgres_password') }}
         private_ssh_key: >-
-          {{ lookup('aws_ssm', '/vnc/ssh/rsa_private_key') }}
+          {{ lookup('aws_ssm', '/vnc/ssh/ed25519_private_key') }}
         rdp_username: >-
           {{ lookup('aws_ssm', '/rdp/username') }}
         rdp_password: >-

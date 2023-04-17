@@ -73,8 +73,8 @@ Manager parameter store](https://docs.aws.amazon.com/systems-manager/latest/user
   instance via RDP
 - `/rdp/password`: The password for Guacamole to use when connecting to an
   instance via RDP
-- `/vnc/ssh/rsa_private_key`: The private SSH key to use for SFTP file transfer
-  in Guacamole
+- `/vnc/ssh/ed25519_private_key`: The private SSH key to use for SFTP
+  file transfer in Guacamole
 - `/vnc/username`: The username for Guacamole to use when connecting to an
   instance via VNC
 - `/vnc/password`: The password for Guacamole to use when connecting to an
