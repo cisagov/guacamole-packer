@@ -16,7 +16,7 @@
     - name: Create the devops user
       ansible.builtin.include_role:
         name: devops
-    - name: Install and configure freeipa client
+    - name: Install and configure FreeIPA client
       ansible.builtin.include_role:
         name: freeipa_client
     - name: Install and configure htop

@@ -4,7 +4,7 @@
   become: yes
   become_method: sudo
   tasks:
-    - name: Install Amazon SSM Agent
+    - name: Install Guacamole Docker composition
       ansible.builtin.include_role:
         name: guacamole
       vars:
