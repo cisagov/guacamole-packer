@@ -2,7 +2,7 @@
 - hosts: all
   name: Install Guacamole Docker composition
   become: yes
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   tasks:
     - name: Install Guacamole Docker composition
       ansible.builtin.include_role:
