@@ -2,7 +2,7 @@
 - hosts: all
   name: Install Guacamole Docker composition
   become: yes
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   tasks:
     - name: Install Guacamole Docker composition
       ansible.builtin.include_role:
@@ -13,25 +13,26 @@
         # onto the end of them.
         #
         # The postgres database username and password for guacamole
-        postgres_username: >-
+        guacamole_postgres_username: >-
           {{ lookup('aws_ssm', '/guacamole/postgres_username') }}
-        postgres_password: >-
+        guacamole_postgres_password: >-
           {{ lookup('aws_ssm', '/guacamole/postgres_password') }}
-        private_ssh_key: >-
+        guacamole_private_ssh_key: >-
           {{ lookup('aws_ssm', '/vnc/ssh/ed25519_private_key') }}
-        rdp_username: >-
+        guacamole_rdp_username: >-
           {{ lookup('aws_ssm', '/rdp/username') }}
-        rdp_password: >-
+        guacamole_rdp_password: >-
           {{ lookup('aws_ssm', '/rdp/password') }}
-        vnc_username: >-
+        guacamole_vnc_username: >-
           {{ lookup('aws_ssm', '/vnc/username') }}
-        vnc_password: >-
+        guacamole_vnc_password: >-
           {{ lookup('aws_ssm', '/vnc/password') }}
-        windows_sftp_base: >-
+        guacamole_windows_sftp_base: >-
           {{ lookup('aws_ssm', '/vnc/sftp/windows_base_directory') }}
     # boto3 is needed during deployment to fetch SSL certificates.
-    # pystache may be used during deployment as part of the process that
-    # automatically defines Guacamole connections to other instances
+    # pystache may be used during deployment as part of the process
+    # that automatically defines Guacamole connections to other
+    # instances.
     - name: Install boto3 and pystache
       ansible.builtin.pip:
         executable: pip3
