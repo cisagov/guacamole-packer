@@ -34,8 +34,7 @@
     # that automatically defines Guacamole connections to other
     # instances.
     - name: Install boto3 and pystache
-      ansible.builtin.pip:
-        executable: pip3
+      ansible.builtin.package:
         name:
-          - boto3
-          - pystache
+          - python3-boto3
+          - python3-pystache
