@@ -15,6 +15,7 @@
   src: https://github.com/cisagov/ansible-role-devops-user
 - name: freeipa_client
   src: https://github.com/cisagov/ansible-role-freeipa-client
+  version: bugfix/set-default-ccache-name-for-bookworm-too
 - name: guacamole
   src: https://github.com/cisagov/ansible-role-guacamole
 - name: htop
