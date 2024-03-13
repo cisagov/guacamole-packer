@@ -33,7 +33,7 @@
     # pystache may be used during deployment as part of the process
     # that automatically defines Guacamole connections to other
     # instances.
-    - name: Install boto3 and pystache
+    - name: Install python3-boto3 and python3-pystache
       ansible.builtin.package:
         name:
           - python3-boto3
