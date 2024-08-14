@@ -242,7 +242,9 @@ jobs:
       fail-fast: false
       matrix:
         architecture:
-          - arm64
+          # cisagov/ansible-role-guacamole cannot currently support
+          # ARM64 because the official Guacamole Docker images do not.
+          # - arm64
           - x86_64
     steps:
       - id: harden-runner
