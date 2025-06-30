@@ -293,6 +293,8 @@ No modules.
 | ami\_regions | The list of AWS regions to copy the AMI to once it has been created. Example: ["us-east-1"] | `list(string)` | `[]` | no |
 | build\_region | The region in which to retrieve the base AMI from and build the new AMI. | `string` | `"us-east-1"` | no |
 | build\_region\_kms | The ID or ARN of the KMS key to use for AMI encryption. | `string` | `"alias/cool-amis"` | no |
+| force\_install\_ansible\_requirements | Indicate if the Ansible requirements should be force installed. | `bool` | `false` | no |
+| force\_install\_ansible\_requirements\_with\_dependencies | Indicate if the Ansible requirements *and* their dependencies should be force installed. | `bool` | `false` | no |
 | github\_ref\_name | The GitHub short ref name to use for the tags applied to the created AMI. | `string` | `""` | no |
 | github\_sha | The GitHub commit SHA to use for the tags applied to the created AMI. | `string` | `""` | no |
 | is\_prerelease | The pre-release status to use for the tags applied to the created AMI. | `bool` | `false` | no |
