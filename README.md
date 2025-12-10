@@ -1,6 +1,8 @@
 # guacamole-packer 🥑📦 #
 
 [![GitHub Build Status](https://github.com/cisagov/guacamole-packer/workflows/build/badge.svg)](https://github.com/cisagov/guacamole-packer/actions)
+[![License](https://img.shields.io/github/license/cisagov/guacamole-packer)](https://spdx.org/licenses/)
+[![CodeQL](https://github.com/cisagov/guacamole-packer/workflows/CodeQL/badge.svg)](https://github.com/cisagov/guacamole-packer/actions/workflows/codeql-analysis.yml)
 
 This project can be used to create machine images that include
 [Apache Guacamole](https://guacamole.apache.org/), a clientless
