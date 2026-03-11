@@ -14,21 +14,21 @@
         #
         # The postgres database username and password for guacamole
         guacamole_postgres_username: >-
-          {{ lookup('aws_ssm', '/guacamole/postgres_username') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/guacamole/postgres_username') }}
         guacamole_postgres_password: >-
-          {{ lookup('aws_ssm', '/guacamole/postgres_password') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/guacamole/postgres_password') }}
         guacamole_private_ssh_key: >-
-          {{ lookup('aws_ssm', '/vnc/ssh/ed25519_private_key') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/vnc/ssh/ed25519_private_key') }}
         guacamole_rdp_username: >-
-          {{ lookup('aws_ssm', '/rdp/username') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/rdp/username') }}
         guacamole_rdp_password: >-
-          {{ lookup('aws_ssm', '/rdp/password') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/rdp/password') }}
         guacamole_vnc_username: >-
-          {{ lookup('aws_ssm', '/vnc/username') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/vnc/username') }}
         guacamole_vnc_password: >-
-          {{ lookup('aws_ssm', '/vnc/password') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/vnc/password') }}
         guacamole_windows_sftp_base: >-
-          {{ lookup('aws_ssm', '/vnc/sftp/windows_base_directory') }}
+          {{ lookup('amazon.aws.ssm_parameter', '/vnc/sftp/windows_base_directory') }}
     # boto3 is needed during deployment to fetch SSL certificates.
     # pystache may be used during deployment as part of the process
     # that automatically defines Guacamole connections to other
