@@ -5,6 +5,7 @@
 # either (or both) can be an empty list, e.g., collections: [].
 collections:
   # Required by the following playbooks:
+  # - ansible/guacamole.yml (uses amazon.aws.ssm_parameter)
   # - ansible/wazuh_agent.yml (uses amazon.aws.ssm_parameter)
   - amazon.aws
   # Required by the following Ansible roles:
@@ -13,6 +14,9 @@ collections:
   # - ansible-role-amazon-ssm-agent (uses community.general.snap)
   # - ansible-role-automated-security-updates (uses community.general.ini_file)
   # - ansible-role-cloudwatch-agent (uses community.general.ini_file)
+  # - ansible-role-freeipa-client (uses community.general.ini_file)
+  # - ansible-role-httpd (dependency of ansible-role-guacamole that
+  #   uses community.general.apache2_module)
   # - ansible-role-persist-journald (uses community.general.ini_file)
   # - ansible-role-systemd-resolved (uses community.general.ini_file)
   - community.general
