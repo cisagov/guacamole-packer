@@ -25,7 +25,7 @@
     - name: Create the joiner user
       ansible.builtin.include_role:
         name: joiner
-    - name: Configure JournalD to preserve logs across reboots
+    - name: Configure journald to preserve logs across reboots
       ansible.builtin.include_role:
         name: persist_journald
     - name: Install and configure systemd-resolved
