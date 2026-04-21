@@ -1,8 +1,6 @@
 build {
   sources = [
-    # cisagov/ansible-role-guacamole cannot currently support ARM64
-    # because the official Guacamole Docker images do not.
-    # "source.amazon-ebs.arm64",
+    "source.amazon-ebs.arm64",
     "source.amazon-ebs.x86_64",
   ]
 

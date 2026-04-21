@@ -26,12 +26,14 @@ details.
 
 | Name | Source | Version |
 | ---- | ------ | ------- |
+| ami\_launch\_permission\_arm64 | github.com/cisagov/ami-launch-permission-tf-module | n/a |
 | ami\_launch\_permission\_x86\_64 | github.com/cisagov/ami-launch-permission-tf-module | n/a |
 
 ## Resources ##
 
 | Name | Type |
 | ---- | ---- |
+| [aws_ami_ids.historical_amis_arm64](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami_ids) | data source |
 | [aws_ami_ids.historical_amis_x86_64](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami_ids) | data source |
 | [aws_caller_identity.images](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 
