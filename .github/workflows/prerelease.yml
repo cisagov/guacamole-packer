@@ -67,9 +67,7 @@ jobs:
       fail-fast: false
       matrix:
         architecture:
-          # cisagov/ansible-role-guacamole cannot currently support
-          # ARM64 because the official Guacamole Docker images do not.
-          # - arm64
+          - arm64
           - x86_64
     steps:
       - name: Apply standard cisagov job preamble
