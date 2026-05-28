@@ -39,7 +39,6 @@ roles:
     src: https://github.com/cisagov/ansible-role-freeipa-client
   - name: guacamole
     src: https://github.com/cisagov/ansible-role-guacamole
-    version: improvement/use-latest-guacamole-composition
   - name: htop
     src: https://github.com/cisagov/ansible-role-htop
   - name: joiner
